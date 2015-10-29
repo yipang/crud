@@ -10,16 +10,18 @@ var total = 0.0;
 
 $('form').submit(function() {
 	var comment = new Review();
-	var numOfStars = Number($('#star').raty('score'));
+	var numOfStars = $('#star').raty('score');
+
 	comment.set('rate', numOfStars);
 	comment.set('title', $('#title').val());
-	commnet.set('review', $('#review').val());
-
+	comment.set('review', $('#review').val());
+	
 	comment.save(null, {
 		success: function() {
 			getData();
 		}
 	});
+	
 	return false;
 });
 
@@ -35,17 +37,9 @@ var getData = function() {
 }
 
 var buildList = function(data) {
-	count = data.length;
-
 	$('#reviews').empty();
 	data.forEach(function(d) {
 		addItem(d)
-	});
-
-	$('#averageRating').raty({
-		score: total / count,
-		readOnly: true,
-		halfShow: true
 	});
 }
 
@@ -70,8 +64,8 @@ var addItem = function(item) {
 	space.append(disagree);
 	space.append(remove);
 	$('#reviews').append(space);
-	$('#rate' + rate).raty({
-		score:curScore,
+	$('#rate').raty({
+		score:rate,
 		readOnly: true
 	});
 
