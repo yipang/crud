@@ -44,27 +44,33 @@ var buildList = function(data) {
 }
 
 var addItem = function(item) {
+	count++;
 	var title = item.get('title');
 	var review = item.get('review');
 	var rate = item.get('rate');
 	total += rate;
 
-	var space = $('<div></div>');
+	var space = $('<div class="simpleReview"></div>');
 	var showTitle = $('<h3>' + title + '</h3>');
 	var showReview = $('<p>' + review + '</p>');
-	var stars = $('<div id=rate>' + rate + '</div>');
+	var stars = $('<div class="starRating"></div>');
 
 	var agree = $('<button class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i></button>');
 	var disagree = $('<button class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-down"></i></button>');
 	var remove = $('<button class="btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>');
-
+	var avg = total / count;
+	$('#averageRating').raty({
+		score: avg,
+		readOnly: true
+	});
+	space.append(stars);
 	space.append(showTitle);
 	space.append(showReview);
 	space.append(agree);
 	space.append(disagree);
 	space.append(remove);
 	$('#reviews').append(space);
-	$('#rate').raty({
+	$('.starRating').raty({
 		score:rate,
 		readOnly: true
 	});
